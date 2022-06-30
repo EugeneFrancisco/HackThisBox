@@ -1,0 +1,20 @@
+import cv2
+from google.colab.patches import cv2_imshow
+from PIL import Image
+import numpy as np
+
+#im = Image.open(r"/content/photos/image0300 ^2022-06-25 07:22:43.268632^.jpg")
+
+image = cv2.imread("/content/photos/greenImage.jpg", 1)
+print(image.shape)
+#croppedImage = image[:768,200:450]
+#cv2_imshow(croppedImage)
+cv2_imshow(image)
+#cv2.imwrite("/content/photos/image0300bw.jpg", image)
+hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+lowerYellow = np.array([10,0,0])#60,0,0
+upperYellow = np.array([120,255,255])#120,255,255
+mask = cv2.inRange(hsv, lowerYellow, upperYellow)
+result = cv2.bitwise_and(image, image, mask = mask)
+cv2_imshow(mask)
+cv2_imshow(result)
